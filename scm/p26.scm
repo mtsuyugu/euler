@@ -1,0 +1,26 @@
+(use srfi-1)
+
+(define (find-repeating num)
+  (let loop ((n 1)
+             (result '()))
+    (let* ((m (modulo n num))
+           (q (quotient n num))
+           (found (assq m result)))
+      (cond ((= m 0) '())
+            (found (set-cdr! (cdr found) (+ (cddr found) 1))
+                   (reverse (acons m (cons q 1) result)))
+            (else (loop (* m 10) (acons m (cons q 1) result)))))))
+
+(define (count-repeating l)
+  (let loop ((l l))
+    (cond ((null? l) 0)
+          ((= (cddr (car l)) 2) (length (cdr l)))
+          (else (loop (cdr l))))))
+
+(define (p26)
+  (caar (sort (map (lambda (x) (cons x (count (find-repeating x))))
+                   (iota 999 1))
+              (lambda (x y)
+                (> (cdr x) (cdr y))))))
+
+(print (p26))

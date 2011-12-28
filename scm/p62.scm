@@ -1,0 +1,17 @@
+(define (p62) 
+  (letrec ((cube (lambda (x) (* x x x)))
+           (sort-char (lambda (num) (list->string (sort (string->list (number->string num))))))
+           (sv (make-hash-table 'string=?))
+           (sv-count (lambda (k) (length (hash-table-get sv k '()))))
+           (sv-push (lambda (k v) (hash-table-push! sv k v)))
+           (iter (lambda (n)
+                   (let* ((cuben (cube n))
+                          (sorted (sort-char cuben)))
+                     (sv-push sorted cuben)
+                     (if (= (sv-count sorted) 5)
+                       (list n (hash-table-get sv sorted))
+                       (iter (+ n 1)))))))
+    (iter 1)))
+
+(print (p62))
+

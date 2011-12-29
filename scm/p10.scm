@@ -1,36 +1,15 @@
-(use util.stream)
+;The sum of the primes below 10 is 2 + 3 + 5 + 7 = 17.
+;Find the sum of all the primes below two million.
 
-(define (display-stream stream n)
-  (let loop ((i 0)
-             (s stream))
-    (when (< i n)
-      (format #t "~s\n" (stream-car s))
-      (loop (+ i 1) (stream-cdr s)))))
+(load "./eratosthenes.scm")
 
-(define divisible? (lambda (n d) (= (modulo n d) 0)))
-(define square (lambda (x) (* x x)))
-
-(define (integers-starting-from n)
-  (stream-cons n (integers-starting-from (+ n 1))))
-
-(define primes
-  (stream-cons
-    2
-    (stream-filter prime? (integers-starting-from 3))))
-
-(define (prime? n)
-  (define (iter ps)
-    (cond ((> (square (stream-car ps)) n) #t)
-          ((divisible? n (stream-car ps)) #f)
-          (else (iter (stream-cdr ps)))))
-  (iter primes))
+(define N 2000000)
+(time (eratosthenes N))
 
 (define (p10)
-  (let loop ((sum 0)
-             (p primes))
-    (if (> (stream-car p) 200000)
-      sum
-      (loop (+ sum (stream-car p)) (stream-cdr p)))))
+  (fold-with-index (lambda (idx x n)
+                     (if x (+ n idx) n))
+                   0
+                   prime-table))
 
-(time (print (p10)))
-
+(print (p10))

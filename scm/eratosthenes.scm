@@ -1,9 +1,9 @@
 (use gauche.sequence)
 
 (define prime-table #f)
-(define (make-prime-table n) (set! prime-table (make-vector (+ N 1) #t)))
 (define (eratosthenes n)
-  (letrec ((check (lambda (m) 
+  (letrec ((make-prime-table (lambda (n) (set! prime-table (make-vector (+ n 1) #t))))
+           (check (lambda (m) 
                     (let loop ((i (* m 2)))
                       (if (>= n i) 
                         (begin (vector-set! prime-table i #f)

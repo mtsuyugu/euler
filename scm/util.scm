@@ -1,5 +1,16 @@
 (define % (lambda (x y) (= (modulo x y) 0)))
 
+(define (char-sort str) (list->string (sort (string->list str))))
+(define (pandigital? str) (and (= (string-length str) 9)
+                               (equal? (char-sort str) "123456789")))
+
+(define (n-pandigital? num)
+  (define answer-list (list "1" "12" "123" "1234" "12345" "123456" "1234567" "12345678" "123456789"))
+  (let* ((str (number->string num))
+         (keta (string-length str)))
+    (and (< keta 10)
+         (equal? (char-sort str) (list-ref answer-list (- keta 1))))))
+
 (define (divisors x)
   (let ((limit (sqrt x)))
     (let loop ((i 2) (result '(1)))

@@ -21,3 +21,10 @@
 
 (define (prime? x) (eq? (vector-ref prime-table x) #t))
 
+(define (prime-list-less-than m)
+  (cdr (reverse (fold-with-index (lambda (idx x r) 
+                                   (if (and x (< idx m))
+                                     (cons idx r)
+                                     r))
+                                 '()
+                                 prime-table))))

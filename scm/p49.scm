@@ -19,6 +19,4 @@
                                  (print (digit-append n1 n2 n3)))))))
                            prime-list 2)))
 
-
-;                                 (print (apply string-append (map number->string (list n1 n2 n3)))))))))
 (p49)

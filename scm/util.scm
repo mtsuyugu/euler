@@ -1,3 +1,4 @@
+(define sum (cut apply + <>))
 (define % (lambda (x y) (= (modulo x y) 0)))
 
 (define (char-sort str) (list->string (sort (string->list str))))

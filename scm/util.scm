@@ -1,7 +1,15 @@
 (define sum (cut apply + <>))
 (define % (lambda (x y) (= (modulo x y) 0)))
 
+; (char-sort "3421") -> "1234"
 (define (char-sort str) (list->string (sort (string->list str))))
+
+; (digit-sort 3421) -> 1234
+(define (digit-sort num) (string->number (char-sort (number->string num))))
+
+; (digit-append 1 2 3) -> 123
+(define digit-append (lambda x (apply string-append (map number->string x))))
+
 (define (pandigital? str) (and (= (string-length str) 9)
                                (equal? (char-sort str) "123456789")))
 
@@ -24,3 +32,4 @@
                 (cond ((not (= m 0)) result)
                       ((= q i) (cons i result))
                       (else (list* q i result)))))))))
+

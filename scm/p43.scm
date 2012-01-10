@@ -1,6 +1,5 @@
 (use srfi-1)
 (use util.combinations)
-(load "./eratosthenes.scm")
 (load "./util.scm")
 
 

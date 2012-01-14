@@ -33,3 +33,12 @@
                       ((= q i) (cons i result))
                       (else (list* q i result)))))))))
 
+(define (prime-by-divide? n)
+  (cond ((or (= n 2) (= n 3)) #t)
+        ((or (< n 2) (% n 2) (% n 3)) #f)
+        (else (let ((limit (sqrt n)))
+                (let loop ((x 5) (d 2))
+                  (cond ((> x limit) #t)
+                        ((% n x) #f)
+                        (else (loop (+ x d) (if (= d 2) 4 2)))))))))
+

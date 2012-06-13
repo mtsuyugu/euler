@@ -1,22 +1,10 @@
-(use srfi-1)
+(define p71 
+  (lambda () (letrec ((iter (lambda (n d result)
+                              (let ((frac (/ n d)))
+                                (cond ((> d 1000000) result)
+                                      ((>= frac (/ 3 7))
+                                       (iter (floor (/ (* 3 (+ d 1)) 7)) (+ d 1) result))
+                                      (else (iter (+ n 1) d (max frac result))))))))
+               (numerator (iter 1 2 0)))))
+(time (print (p71)))
 
-; this program results in out of memory....
-
-(define (frac x)
-  (delete-duplicates
-  (sort 
-    (fold (lambda (x p) 
-            (format (current-error-port) "~s\n" x)
-         (append (map (lambda (y) (/ y x)) (iota (- x 1) 1)) p))
-        '()
-        (iota (- x 1) 2)))))
-
-(define (find l)
-  (let loop ((l l) (p 0))
-    (cond ((null? l) #f)
-          ((= (car l) (/ 3 7)) p)
-          (else (loop (cdr l) (car l))))))
-
-(define (p71)
-  (find (frac 1000000)))
-      

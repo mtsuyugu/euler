@@ -59,13 +59,9 @@
           (else (loop (cdr c))))))
 
 (define (straight cards)
-  (if (= (number (first cards))
-         (+ 1 (number (second cards)))
-         (+ 2 (number (third cards)))
-         (+ 3 (number (fourth cards)))
-         (+ 4 (number (fifth cards))))
-    cards
-    '()))
+  (let ((num-of-first (number (first cards))))
+    (if (every (lambda (n) (= num-of-first (+ n (number (list-ref cards n))))) (iota 4 1))
+    cards '())))
 
 (define (flush cards)
   (let ((found (any (lambda (x) 
@@ -154,6 +150,5 @@
         (iter (read-line port) 0))))))
 
                            
-
 (print (p54))
 

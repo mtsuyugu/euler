@@ -52,6 +52,7 @@ sub generate_values {
 	return $values;
 }
 
+
 sub debug{
 	my($v, $found, $visited, $last2) = @_;
 	print "$v [". (reduce {"$a, $b"} @{$found}) . "] ";
@@ -65,7 +66,11 @@ sub search {
 	my $v = sum @{$visited};
 #	&debug($v, $found, $visited, $last2);
 	if( $v == 6 && substr($found->[0], 0, 2) eq $last2 ){
-		my $sum = reduce {print "$b "; $a+$b} @{$found};
+		my $sum = 0;
+      foreach my $str (@{$found}){
+         print "$str ";
+         $sum += $str;
+      }
 		print "\nsum: $sum\n";
 		return 1;
 	}
@@ -84,7 +89,9 @@ sub search {
 }
 
 my $values = &generate_values();
-my $N = 3;
+#print Dumper($values->[8]);
+my $N = 8;
+
 main:
 foreach my $k (sort keys %{$values->[$N]}){
 	foreach my $n ( @{$values->[$N]->{$k}} ){
